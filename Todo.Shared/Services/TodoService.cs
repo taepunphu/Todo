@@ -35,11 +35,21 @@ namespace Todo.Shared.Services
                 Subject = todoItem.Subject,
                 Description = todoItem.Description,
                 IsActive = "A",
-                StartDate = todoItem.StartDate,
-                EndDate = todoItem.EndDate,
                 Created_Date = DateTime.Now
             };
             return _repo.Insert(item);
+        }
+
+        public int IsActiveTask(TodoItem todoItem)
+        {
+            var item = new TodoItem()
+            {
+                Id = todoItem.Id,
+                IsActive = todoItem.IsActive,
+                Updated_Date = DateTime.Now
+            };
+
+            return _repo.IsActiveTask(item);
         }
 
         public int Update(TodoItem todoItem)
@@ -49,8 +59,6 @@ namespace Todo.Shared.Services
                 Subject = todoItem.Subject,
                 Description = todoItem.Description,
                 IsActive = todoItem.IsActive,
-                StartDate = todoItem.StartDate,
-                EndDate = todoItem.EndDate,
                 Updated_Date = DateTime.Now
             };
 

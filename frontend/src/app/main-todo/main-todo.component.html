@@ -1,0 +1,61 @@
+<header>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        ToDo App
+      </a>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="container">
+    <form [formGroup]="addTaskForm" (ngSubmit)="addTask()">
+      <div class="form-group">
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label">Subject</label>
+            <input type="text"
+              [ngClass]="{ 'is-invalid': addTaskForm.get('subject').errors && addTaskForm.get('subject').touched }"
+              class="form-control" placeholder="Subject" formControlName="subject" name="description">
+            <div class="invalid-feedback"
+              *ngIf=" addTaskForm.get('subject').touched && addTaskForm.get('subject').hasError('required')">Subject is
+              required</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Descripion</label>
+            <input type="text"
+              [ngClass]="{ 'is-invalid': addTaskForm.get('description').errors && addTaskForm.get('description').touched }"
+              class="form-control" placeholder="Description" formControlName="description" name="description">
+            <div class="invalid-feedback"
+              *ngIf="addTaskForm.get('description').touched && addTaskForm.get('description').hasError('required')">
+              descripion is required</div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!addTaskForm.valid">Add Todo</button>
+    </form>
+    <hr />
+
+    <ul *ngFor="let item of todoItemList" class="list-group mb-3">
+      <li class="list-group-item clearfix task">
+        <p class="lead"><b>Subject: {{item.subject}}</b> </p>
+        <p class="lead"><b>Description: {{item.description}}</b> </p>
+        <p class="lead"><b>Created: {{item.created_Date}}</b> </p>
+        <div>
+          <button type="button" class="btn btn-info" (click)='editTodoItem(item.id)'><i
+              class="fas fa-edit"></i></button>
+          <button type="button" class="btn btn-primary" (click)='checkOutTodoItem(item.id, item.isActive)'><i
+              [ngClass]="{'fa-check': item.isActive === 'A', 'fa-redo': item.isActive === 'N'}"
+              class="fas"></i></button>
+          <button type="button" class="btn btn-danger" (click)='deleteTodoItem(item.id)'><i
+              class="fas fa-trash"></i></button>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</main>

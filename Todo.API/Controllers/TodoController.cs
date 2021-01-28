@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Todo.API.Dtos;
 using Todo.Shared.Models;
 using Todo.Shared.Services;
 
@@ -47,6 +48,19 @@ namespace Todo.API.Controllers
         public IActionResult DeleteTodo(int id)
         {
             var data = _service.Delete(id);
+            return Ok(StatusCode(200));
+        }
+
+        [HttpPut("updatetask")]
+        public IActionResult UpdateTask(TodoForUpdateTaskDto todoForUpdateTaskDto)
+        {
+            var datanew = new TodoItem()
+            {
+                Id = todoForUpdateTaskDto.Id,
+                IsActive = todoForUpdateTaskDto.IsActive
+            };
+
+            var data = _service.IsActiveTask(datanew);
             return Ok(StatusCode(200));
         }
 

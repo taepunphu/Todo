@@ -43,7 +43,7 @@ namespace Todo.Shared.Repositories
         {
             using (var sqlConnection = OpenDbConnection())
             {
-                string sql = @"select * from TODO_ITEM";
+                string sql = @"select * from TODO_ITEM order by Created_Date desc";
                 return sqlConnection.Query<TodoItem>(sql);
             }
         }
@@ -52,8 +52,8 @@ namespace Todo.Shared.Repositories
         {
             using (var sqlConnection = OpenDbConnection())
             {
-                string sql = @"insert into TODO_ITEM(Subject,Description,StartDate,EndDate,Created_Date,IsActive) ";
-                sql += " values(@Subject,@Description,@StartDate,@EndDate,@Created_Date,@IsActive)";
+                string sql = @"insert into TODO_ITEM(Subject,Description,Created_Date,IsActive) ";
+                sql += " values(@Subject,@Description,@Created_Date,@IsActive)";
                 return sqlConnection.ExecuteScalar<int>(sql, todoItem);
             }
         }
@@ -62,7 +62,16 @@ namespace Todo.Shared.Repositories
         {
             using (var sqlConnection = OpenDbConnection())
             {
-                string sql = @"update TODO_ITEM set Subject = @Subject, Description = @Description, StartDate = @StartDate, EndDate = @EndDate, IsActive = @IsActive, Updated_Date = @Updated_Date";
+                string sql = @"update TODO_ITEM set Subject = @Subject, Description = @Description, IsActive = @IsActive, Updated_Date = @Updated_Date where Id = @Id";
+                return sqlConnection.Execute(sql, todoItem);
+            }
+        }
+
+        public int IsActiveTask(TodoItem todoItem)
+        {
+            using (var sqlConnection = OpenDbConnection())
+            {
+                string sql = @"update TODO_ITEM set IsActive = @IsActive, Updated_Date = @Updated_Date where Id = @Id";
                 return sqlConnection.Execute(sql, todoItem);
             }
         }

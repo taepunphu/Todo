@@ -10,5 +10,6 @@ namespace Todo.Shared.Services
         int Insert(TodoItem todoItem);
         int Update(TodoItem todoItem);
         int Delete(int id);
+        int IsActiveTask(TodoItem todoItem);
     }
 }
